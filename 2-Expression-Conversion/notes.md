@@ -30,12 +30,18 @@ A B +
 
 ## Why Stack?
 
-Operators may need to wait until their operands or higher-priority operators are processed.
+Operators cannot always be placed directly into the answer.
+
+They may need to wait because of:
+
+- operator precedence
+- associativity
+- parentheses
 
 ```text
 Expression
     ↓
-Operands → output
+Operands  → output
 Operators → stack
 ```
 
@@ -44,9 +50,11 @@ Operators → stack
 ## Operator Precedence
 
 ```text
-^
-*, /
-+, -
+^        → 3
+
+* /      → 2
+
++ -      → 1
 ```
 
 Higher precedence operators are processed first.
@@ -56,28 +64,129 @@ Higher precedence operators are processed first.
 ## Associativity
 
 ```text
-^       → Right associative
-*, /    → Left associative
-+, -    → Left associative
+^        → Right associative
+
+* /      → Left associative
+
++ -      → Left associative
 ```
+
+Important:
+
+```text
+^ → right associative
+```
+
+This matters especially when converting Infix ↔ Prefix.
 
 ---
 
 ## Core Pattern
 
+### Infix → Postfix
+
 ```text
+Scan: Left → Right
+
 Operand
     → output
 
-Operator
-    → compare precedence
-    → stack
-
-Opening '('
+'('
     → push
 
-Closing ')'
+')'
     → pop until '('
+
+Operator
+    → pop higher/equal priority operators
+    → push current operator
+
+End
+    → pop remaining operators
+```
+
+---
+
+### Infix → Prefix
+
+```text
+Reverse expression
+        ↓
+Swap '(' and ')'
+        ↓
+Convert to Postfix
+        ↓
+Reverse result
+        ↓
+Prefix
+```
+
+---
+
+### Postfix → Infix
+
+```text
+Scan: Left → Right
+
+Operand
+    → push
+
+Operator
+    → pop right
+    → pop left
+    → (left operator right)
+    → push
+```
+
+---
+
+### Prefix → Infix
+
+```text
+Scan: Right → Left
+
+Operand
+    → push
+
+Operator
+    → pop first
+    → pop second
+    → (first operator second)
+    → push
+```
+
+---
+
+### Postfix → Prefix
+
+```text
+Scan: Left → Right
+
+Operand
+    → push
+
+Operator
+    → pop right
+    → pop left
+    → operator + left + right
+    → push
+```
+
+---
+
+### Prefix → Postfix
+
+```text
+Scan: Right → Left
+
+Operand
+    → push
+
+Operator
+    → pop first
+    → pop second
+    → first + second + operator
+    → push
 ```
 
 ---
@@ -85,26 +194,75 @@ Closing ')'
 ## Problems
 
 1. Infix → Postfix
-2. Prefix → Infix
-3. Prefix → Postfix
-4. Postfix → Prefix
-5. Postfix → Infix
-6. Infix → Prefix
+2. Infix → Prefix
+3. Postfix → Infix
+4. Prefix → Infix
+5. Postfix → Prefix
+6. Prefix → Postfix
+
+---
+
+## Conversion Cheat Sheet
+
+| Conversion | Traversal | Operator Combination |
+|---|---|---|
+| Infix → Postfix | Left → Right | Precedence + stack |
+| Infix → Prefix | Reverse → Postfix → Reverse | Precedence + stack |
+| Postfix → Infix | Left → Right | `(left op right)` |
+| Prefix → Infix | Right → Left | `(left op right)` |
+| Postfix → Prefix | Left → Right | `op + left + right` |
+| Prefix → Postfix | Right → Left | `left + right + op` |
+
+---
+
+## Key Pattern
+
+```text
+Expression Conversion
+        ↓
+      Stack
+        +
+Precedence / Associativity
+        +
+    Traversal
+```
+
+The main thing to remember is:
+
+```text
+Postfix → scan Left → Right
+
+Prefix → scan Right → Left
+```
+
+For conversion into another notation:
+
+```text
+Operator position changes.
+
+Postfix:
+    left right operator
+
+Prefix:
+    operator left right
+
+Infix:
+    left operator right
+```
 
 ---
 
 ## Key Takeaway
 
-Expression conversion is primarily:
+Expression conversion is mainly about understanding:
 
 ```text
-Stack
-+
-Operator precedence
-+
-Associativity
-+
-Parentheses
+1. Stack
+2. Operator precedence
+3. Associativity
+4. Traversal direction
+5. Operand/operator combination
+6. Parentheses
 ```
 
-Once these rules are clear, the six conversions become variations of the same idea.
+Once these rules are clear, all six conversions become variations of the same stack pattern.

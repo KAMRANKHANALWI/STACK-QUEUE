@@ -42,11 +42,11 @@ STACK-QUEUE/
 │
 ├── 2-Expression-Conversion/
 │   ├── 01_infix_to_postfix.py
-│   ├── 02_prefix_to_infix.py
-│   ├── 03_prefix_to_postfix.py
-│   ├── 04_postfix_to_prefix.py
-│   ├── 05_postfix_to_infix.py
-│   ├── 06_infix_to_prefix.py
+│   ├── 02_infix_to_prefix.py
+│   ├── 03_postfix_to_infix.py
+│   ├── 04_prefix_to_infix.py
+│   ├── 05_postfix_to_prefix.py
+│   ├── 06_prefix_to_postfix.py
 │   └── notes.md
 │
 ├── 3-Monotonic-Stack/
