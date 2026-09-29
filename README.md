@@ -61,6 +61,7 @@ STACK-QUEUE/
 │   ├── 09_remove_k_digits.py
 │   ├── 10_largest_rectangle_in_histogram.py
 │   ├── 11_maximal_rectangle.py
+│   ├── 12_previous_smaller_element.py
 │   └── notes.md
 │
 ├── 4-Stack-Queue-Applications/

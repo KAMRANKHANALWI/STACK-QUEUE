@@ -1,7 +1,7 @@
 """
 Problem:
 For every element, find the nearest smaller element
-on its RIGHT.
+on its left.
 
 If no smaller element exists → return -1.
 
@@ -9,17 +9,17 @@ Example:
 arr = [4, 5, 2, 10, 8]
 
 Answer:
-[2, 2, -1, 8, -1]
+[-1, 4, -1, 2, 2]
 
 
 Pattern:
-Monotonic Stack → Next Smaller Element
+Monotonic Stack → Nearest Smaller Element
 
 Key Observation:
-For every element, we only care about the RIGHT side.
+For every element, we only care about the LEFT side.
 
 Therefore:
-    Traverse → Right to Left
+    Traverse → Left to Right
 
 We need the nearest smaller element.
 
@@ -33,22 +33,20 @@ Before processing current:
 Why?
 
 Those elements cannot be the answer for current
-because they are not smaller.
-
-After removing them:
-    stack.top = nearest smaller element on the right.
+or any future element because current is smaller
+and is closer.
 
 
 Brute:
-For every element arr[i], scan towards the right:
+For every element arr[i], scan towards the left:
 
-    i+1 → i+2 → ... → N-1
+    i-1 → i-2 → ... → 0
 
 The first element smaller than arr[i] is the answer.
 
 
 Optimal:
-Traverse from right → left.
+Traverse from left → right.
 
 Maintain an increasing monotonic stack.
 
@@ -63,7 +61,7 @@ Pseudocode:
 
 Brute:
     for i from 0 to N-1:
-        for j from i+1 to N-1:
+        for j from i-1 down to 0:
             if arr[j] < arr[i]:
                 ans[i] = arr[j]
                 break
@@ -72,7 +70,7 @@ Brute:
 Optimal:
     create empty stack
 
-    for i from N-1 down to 0:
+    for i from 0 to N-1:
 
         while stack is not empty
               and stack.top >= arr[i]:
@@ -89,36 +87,34 @@ Optimal:
 Dry Run:
 arr = [4, 5, 2, 10, 8]
 
-Start from RIGHT:
-
-8:
+4:
     stack empty → -1
-    push 8
+    push 4
 
-10:
-    top = 8 < 10
-    answer = 8
-    push 10
+5:
+    top = 4 < 5
+    answer = 4
+    push 5
 
 2:
-    10 >= 2 → pop
-    8 >= 2 → pop
+    5 >= 2 → pop
+    4 >= 2 → pop
     stack empty → -1
     push 2
 
-5:
-    top = 2 < 5
+10:
+    top = 2 < 10
     answer = 2
-    push 5
+    push 10
 
-4:
-    5 >= 4 → pop
-    top = 2 < 4
+8:
+    10 >= 8 → pop
+    top = 2 < 8
     answer = 2
-    push 4
+    push 8
 
 Answer:
-[2, 2, -1, 8, -1]
+[-1, 4, -1, 2, 2]
 
 
 Complexity:
@@ -136,10 +132,9 @@ is pushed once and popped at most once.
 
 
 Takeaway:
-Next Smaller Element:
+Nearest Smaller on Left:
 
-    Direction → Right
-    Traversal → Right → Left
+    Direction → Left → Right
     Stack     → Increasing
     Pop       → >= current
     Answer    → stack.top
@@ -147,14 +142,12 @@ Next Smaller Element:
 Compare with Next Greater:
 
     NGE:
-        Direction → Right
-        Traversal → Right → Left
+        Direction → Right → Left
         Stack     → Decreasing
         Pop       → <= current
 
     NSE:
-        Direction → Right
-        Traversal → Right → Left
+        Direction → Left → Right
         Stack     → Increasing
         Pop       → >= current
 """
@@ -170,8 +163,8 @@ def next_smaller_brute(arr):
 
     for i in range(n):
 
-        # Search towards the right
-        for j in range(i + 1, n):
+        # Search towards the left
+        for j in range(i - 1, -1, -1):
 
             if arr[j] < arr[i]:
                 ans[i] = arr[j]
@@ -189,8 +182,8 @@ def next_smaller_optimal(arr):
     ans = [-1] * n
     stack = []
 
-    # Traverse from right → left
-    for i in range(n - 1, -1, -1):
+    # Traverse from left → right
+    for i in range(n):
 
         # Remove elements that cannot be smaller
         while stack and stack[-1] >= arr[i]:
@@ -206,10 +199,7 @@ def next_smaller_optimal(arr):
     return ans
 
 
-# --------------------------------------------------
 # Example
-# --------------------------------------------------
-
 arr = [4, 5, 2, 10, 8]
 
 print("Brute:  ", next_smaller_brute(arr))
