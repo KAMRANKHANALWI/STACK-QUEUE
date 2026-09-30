@@ -27,22 +27,20 @@ Pseudocode:
 
     for asteroid in arr:
 
-        alive = True
+        while stack and stack[-1] > 0 and asteroid < 0
+              and stack[-1] < abs(asteroid):
 
-        while alive and asteroid < 0
-              and stack and stack[-1] > 0:
+            stack.pop()
 
-            if abs(stack[-1]) < abs(asteroid):
+        if stack and stack[-1] > 0 and asteroid < 0:
+
+            if stack[-1] == abs(asteroid):
                 stack.pop()
 
-            elif abs(stack[-1]) == abs(asteroid):
-                stack.pop()
-                alive = False
+            # else:
+            # stack[-1] is larger → current asteroid dies
 
-            else:
-                alive = False
-
-        if alive:
+        else:
             stack.append(asteroid)
 
     return stack
@@ -69,36 +67,28 @@ Use a stack to keep only surviving asteroids.
 Only + vs - can collide.
 """
 
+
 def asteroid_collision(arr):
     stack = []
 
     for asteroid in arr:
-        alive = True
 
-        # Collision is possible only:
-        # stack top moves right, current moves left.
-        while (
-            alive
-            and asteroid < 0
-            and stack
-            and stack[-1] > 0
-        ):
-            top = stack[-1]
+        # Remove smaller right-moving asteroids.
+        while stack and stack[-1] > 0 and asteroid < 0 and stack[-1] < abs(asteroid):
+            stack.pop()
 
-            # Current asteroid is larger.
-            if top < abs(asteroid):
+        # Collision is still possible after removing smaller asteroids.
+        if stack and stack[-1] > 0 and asteroid < 0:
+
+            # Equal sizes → both destroyed.
+            if stack[-1] == abs(asteroid):
                 stack.pop()
 
-            # Both asteroids are destroyed.
-            elif top == abs(asteroid):
-                stack.pop()
-                alive = False
+            # Stack top is larger → current asteroid is destroyed.
+            # Nothing to do.
 
-            # Current asteroid is destroyed.
-            else:
-                alive = False
-
-        if alive:
+        else:
+            # No collision → current asteroid survives.
             stack.append(asteroid)
 
     return stack
