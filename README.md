@@ -53,15 +53,15 @@ STACK-QUEUE/
 │   ├── 01_next_greater_element.py
 │   ├── 02_next_greater_element_ii.py
 │   ├── 03_next_smaller_element.py
-│   ├── 04_number_of_greater_elements_to_right.py
-│   ├── 05_trapping_rainwater.py
-│   ├── 06_sum_of_subarray_minimums.py
-│   ├── 07_asteroid_collision.py
+│   ├── 04_previous_smaller_element.py
+│   ├── 05_number_of_greater_elements_to_right.py
+│   ├── 06_trapping_rainwater.py
+│   ├── 07_sum_of_subarray_minimums.py
 │   ├── 08_sum_of_subarray_ranges.py
-│   ├── 09_remove_k_digits.py
+│   ├── 09_asteroid_collision.py 
 │   ├── 10_largest_rectangle_in_histogram.py
 │   ├── 11_maximal_rectangle.py
-│   ├── 12_previous_smaller_element.py
+│   ├── 12_remove_k_digits.py
 │   └── notes.md
 │
 ├── 4-Stack-Queue-Applications/
