@@ -219,9 +219,9 @@ LFU Cache
 | -------------------------- | -------: |
 | Stack & Queue Basics       |        8 |
 | Expression Conversion      |        6 |
-| Monotonic Stack            |       11 |
+| Monotonic Stack            |       12 |
 | Stack & Queue Applications |        5 |
-| **Total**                  |   **30** |
+| **Total**                  |   **31** |
 
 ---
 
@@ -229,12 +229,3 @@ LFU Cache
 
 **Python 3**
 
----
-
-## 🎯 Final Goal
-
-By the end of this repository, the objective is to recognize:
-
-> **"What Stack/Queue pattern is hiding behind this problem?"**
-
-rather than memorizing individual solutions.
